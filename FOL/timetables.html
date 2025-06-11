@@ -18,26 +18,79 @@
             </ul>
         </nav>
     </header>
-    <section id="contact">
-        <h2>Fill in the form for more information</h2>
-        <form>
-            <label text-align="left" for="nombre">Name:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            
-            <label for="apellido">First and Second Name</label>
-            <input type="text" id="apellido" name="apellido" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="mensaje">Message:</label>
-            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
-            
-            <button type="submit">Enviar</button>
-        </form>
-    </section>
+    <div class="container">
+        <div class="input-form">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="time" id="entrada" placeholder="Hora de entrada" required>
+            <input type="time" id="salida" placeholder="Hora de salida" required>
+            <button onclick="agregarRegistro()">Agregar</button>
+        </div>
+        
+        <table id="horariosTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Entry Time</th>
+                    <th>Departure Time</th>
+                    <th>Total Hours</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
     <footer>
         <p>&copy; Website created by rabadanmelianeduardo@gmail.com (1º DAW)</p>
     </footer>
+    <script>
+    function agregarRegistro() {
+        const nombre = document.getElementById('nombre').value;
+        const entrada = document.getElementById('entrada').value;
+        const salida = document.getElementById('salida').value;
+        
+        if (!nombre || !entrada || !salida) {
+            alert('Por favor complete todos los campos');
+            return;
+        }
+        
+    
+        const horasTotales = calcularHoras(entrada, salida);
+        
+
+        const tableBody = document.getElementById('tableBody');
+        const newRow = document.createElement('tr');
+        
+        newRow.innerHTML = `
+            <td>${nombre}</td>
+            <td>${entrada}</td>
+            <td>${salida}</td>
+            <td>${horasTotales}</td>
+        `;
+        
+        tableBody.appendChild(newRow);
+        
+        // Limpiar formulario
+        document.getElementById('nombre').value = '';
+        document.getElementById('entrada').value = '';
+        document.getElementById('salida').value = '';
+    }
+    
+    function calcularHoras(entrada, salida) {
+        const [hEntrada, mEntrada] = entrada.split(':').map(Number);
+        const [hSalida, mSalida] = salida.split(':').map(Number);
+        
+        let totalMinutos = (hSalida * 60 + mSalida) - (hEntrada * 60 + mEntrada);
+        
+        // Manejar caso cuando la salida es al día siguiente
+        if (totalMinutos < 0) {
+            totalMinutos += 24 * 60;
+        }
+        
+        const horas = Math.floor(totalMinutos / 60);
+        const minutos = totalMinutos % 60;
+        
+        return `${horas}h ${minutos}m`;
+    }
+</script>
 </body>
 </html>
