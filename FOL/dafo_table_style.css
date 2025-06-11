@@ -3,6 +3,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -46,41 +49,20 @@ nav ul li a:hover {
     background-color: #555;
 }
 
-section {
-    padding: 2rem;
-    color: #444;
-}
 
-.content-section {
+.centered-image-container {
+    flex: 1;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    margin: 2rem 0;
-    gap: 20px; 
+    padding: 2rem;
 }
 
-.content-section .text, .content-section .video-container {
-    flex: 1 1 45%; 
-    min-width: 300px; 
-}
-
-.content-section .text {
-    order: 1; 
-}
-
-.content-section .video-container {
-    order: 2; 
-}
-
-#Adidas_Superstar .text,
-#New_Balance_574 .text {
-    order: 2; 
-}
-
-#Adidas_Superstar .video-container,
-#New_Balance_574 .video-container {
-    order: 1; 
+.centered-image-container img {
+    max-width: 90%;
+    max-height: 90vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 footer {
